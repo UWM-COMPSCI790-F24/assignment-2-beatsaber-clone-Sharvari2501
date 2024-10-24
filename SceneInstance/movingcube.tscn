@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bcp54n73004dy"]
+
+[ext_resource type="Script" path="res://SceneInstance/move.gd" id="1_ioh08"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ydg0e"]
+albedo_color = Color(0.00392157, 0.00392157, 1, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aup1n"]
+
+[node name="movingcube" type="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.6915, -10.0475)
+visible = false
+material_override = SubResource("StandardMaterial3D_ydg0e")
+custom_aabb = AABB(0, 0, 0, 1, 1, 1)
+use_collision = true
+script = ExtResource("1_ioh08")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0579147, 0, 0)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_aup1n")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

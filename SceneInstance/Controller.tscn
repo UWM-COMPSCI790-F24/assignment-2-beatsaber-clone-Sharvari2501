@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8446oh1kxlb8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vgv2g"]
+
+[node name="Controller" type="XRController3D"]
+tracker = &"left_hand"
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_vgv2g")

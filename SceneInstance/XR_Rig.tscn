@@ -1,0 +1,108 @@
+[gd_scene load_steps=21 format=3 uid="uid://05t6dt4m5jc0"]
+
+[ext_resource type="Script" path="res://scripts/xrsetup.gd" id="1_vkhoa"]
+[ext_resource type="Script" path="res://SceneInstance/left_controller.gd" id="2_kves5"]
+[ext_resource type="PackedScene" uid="uid://cnwp7ndjr4s8y" path="res://Models/Quest2Controllers/OculusQuest2TouchController_Left.gltf" id="2_mtejs"]
+[ext_resource type="PackedScene" uid="uid://bc8lh0rihgxvi" path="res://Models/Quest2Controllers/OculusQuest2TouchController_Right.gltf" id="3_1ulsl"]
+[ext_resource type="Script" path="res://SceneInstance/linerenderer.gd" id="3_8tuoo"]
+[ext_resource type="Script" path="res://SceneInstance/raycast.gd" id="5_0xhqt"]
+[ext_resource type="AudioStream" uid="uid://dqixa541pw7i3" path="res://materials/beep.mp3" id="5_pruer"]
+[ext_resource type="Script" path="res://SceneInstance/right_controller.gd" id="6_ik8ii"]
+[ext_resource type="PackedScene" uid="uid://bcp54n73004dy" path="res://SceneInstance/movingcube.tscn" id="7_818rf"]
+[ext_resource type="Script" path="res://SceneInstance/recentre.gd" id="7_f8p63"]
+[ext_resource type="PackedScene" uid="uid://bvbj6g4dharjw" path="res://scripts/cube_spawner.tscn" id="10_mk16w"]
+[ext_resource type="PackedScene" uid="uid://cdxeatyxno44u" path="res://SceneInstance/RedCube.tscn" id="11_vlcf2"]
+[ext_resource type="PackedScene" uid="uid://dat8i2m1fh4qw" path="res://SceneInstance/BlueCube.tscn" id="12_fcwph"]
+[ext_resource type="PackedScene" uid="uid://bmlklbi34uhrs" path="res://SceneInstance/Redcubespawner.tscn" id="14_eop54"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8xlrj"]
+albedo_color = Color(0.852429, 0, 0.150072, 0.00392157)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_7qm5m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g7xio"]
+albedo_color = Color(0, 0.0235294, 0.772549, 0.00392157)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_volnk"]
+
+[sub_resource type="Environment" id="Environment_r8pdd"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rwlku"]
+
+[node name="XROrigin3D" type="XROrigin3D"]
+script = ExtResource("1_vkhoa")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="."]
+transform = Transform3D(0.990513, 0.109018, 0.0836641, -0.0922249, 0.978699, -0.183421, -0.101878, 0.173965, 0.979468, 0, 0, 0)
+fov = 65.969
+
+[node name="LeftController" type="XRController3D" parent="."]
+tracker = &"left_hand"
+script = ExtResource("2_kves5")
+
+[node name="OculusQuest2TouchController_Left" parent="LeftController" instance=ExtResource("2_mtejs")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftController"]
+material_override = SubResource("StandardMaterial3D_8xlrj")
+mesh = SubResource("ImmediateMesh_7qm5m")
+skeleton = NodePath("")
+script = ExtResource("3_8tuoo")
+
+[node name="RayCast3D" type="RayCast3D" parent="LeftController/MeshInstance3D"]
+target_position = Vector3(0, 0, -1)
+collision_mask = 65
+hit_back_faces = false
+collide_with_areas = true
+debug_shape_custom_color = Color(0.847059, 0.0705882, 0, 1)
+script = ExtResource("5_0xhqt")
+
+[node name="beep" type="AudioStreamPlayer3D" parent="LeftController"]
+stream = ExtResource("5_pruer")
+
+[node name="RightController" type="XRController3D" parent="."]
+tracker = &"right_hand"
+script = ExtResource("6_ik8ii")
+
+[node name="OculusQuest2TouchController_Right" parent="RightController" instance=ExtResource("3_1ulsl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightController"]
+material_override = SubResource("StandardMaterial3D_g7xio")
+mesh = SubResource("ImmediateMesh_volnk")
+script = ExtResource("3_8tuoo")
+
+[node name="RayCast3D" type="RayCast3D" parent="RightController/MeshInstance3D"]
+target_position = Vector3(0, 0, -1)
+collision_mask = 513
+hit_from_inside = true
+collide_with_areas = true
+debug_shape_custom_color = Color(0.803922, 0, 0.117647, 1)
+debug_shape_thickness = 5
+script = ExtResource("5_0xhqt")
+
+[node name="beep" type="AudioStreamPlayer3D" parent="RightController"]
+stream = ExtResource("5_pruer")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.616045, 0.534386, 0.578723, -0.150803, 0.80111, -0.579207, -0.773141, 0.269544, 0.574107, 0, 0, 0)
+
+[node name="movingcube" parent="." instance=ExtResource("7_818rf")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r8pdd")
+camera_attributes = SubResource("CameraAttributesPractical_rwlku")
+script = ExtResource("7_f8p63")
+
+[node name="BlueCubeSpawner" parent="." instance=ExtResource("10_mk16w")]
+
+[node name="CSGBox3D" parent="." instance=ExtResource("11_vlcf2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.17013, -0.158237, 13.321)
+
+[node name="CSGBox3D2" parent="." instance=ExtResource("12_fcwph")]
+
+[node name="RedCubeSpawner" parent="." instance=ExtResource("14_eop54")]
+
+[connection signal="button_pressed" from="LeftController" to="." method="_on_left_controller_button_pressed"]
+[connection signal="button_pressed" from="RightController" to="." method="_on_right_controller_button_pressed"]
+[connection signal="pose_recentered" from="WorldEnvironment" to="WorldEnvironment" method="_on_pose_recentered"]

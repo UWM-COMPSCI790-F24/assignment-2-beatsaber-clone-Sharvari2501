@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvbj6g4dharjw"]
+
+[ext_resource type="Script" path="res://cube_spawner.gd" id="1_akign"]
+[ext_resource type="PackedScene" uid="uid://dat8i2m1fh4qw" path="res://SceneInstance/BlueCube.tscn" id="2_5qc83"]
+[ext_resource type="PackedScene" uid="uid://cdxeatyxno44u" path="res://SceneInstance/RedCube.tscn" id="2_yq8tq"]
+
+[node name="Cube Spawner" type="Node3D"]
+script = ExtResource("1_akign")
+blue_cube_scene = ExtResource("2_5qc83")
+red_cube_scene = ExtResource("2_yq8tq")
+spawn_interval = null
+z_position = null
+y_min = null
+y_max = null
+x_range = null
+move_speed = null

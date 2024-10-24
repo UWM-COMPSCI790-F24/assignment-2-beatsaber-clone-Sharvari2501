@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdxeatyxno44u"]
+
+[ext_resource type="Script" path="res://SceneInstance/test.gd" id="1_uljh6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2nfuv"]
+albedo_color = Color(0.756863, 0.113725, 0.0313726, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pu8to"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_kdw8j"]
+
+[node name="CSGBox3D" type="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.458397, 0.157986, 13.321)
+use_collision = true
+collision_layer = 64
+collision_mask = 64
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("StandardMaterial3D_2nfuv")
+script = ExtResource("1_uljh6")
+speed = 0.5
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_pu8to")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("ImmediateMesh_kdw8j")

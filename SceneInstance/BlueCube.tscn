@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dat8i2m1fh4qw"]
+
+[ext_resource type="Script" path="res://SceneInstance/blue_cube.gd" id="1_xtkpb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bugww"]
+albedo_color = Color(0.2, 0.0666667, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6ecwd"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_mgaha"]
+
+[node name="CSGBox3D2" type="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.27756, -0.00770915, 13.321)
+use_collision = true
+collision_layer = 512
+collision_mask = 512
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("StandardMaterial3D_bugww")
+script = ExtResource("1_xtkpb")
+speed = 0.5
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 512
+collision_mask = 512
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_6ecwd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("ImmediateMesh_mgaha")
